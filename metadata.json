@@ -1,0 +1,5 @@
+{
+  "name": "GabaritandoIA",
+  "description": "SaaS platform using AI to generate flashcards, mind maps, and slides from PDF documents for students.",
+  "requestFramePermissions": []
+}
