@@ -1,8 +1,15 @@
+'use server';
+
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { GeneratedContent } from "../types";
 
-console.log("API Key present:", !!process.env.NEXT_PUBLIC_GEMINI_API_KEY);
-const genAI = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || '' });
+const apiKey = process.env.GEMINI_API_KEY;
+
+if (!apiKey) {
+  console.error("GEMINI_API_KEY is not set in environment variables.");
+}
+
+const genAI = new GoogleGenAI({ apiKey: apiKey || '' });
 
 const responseSchema: Schema = {
   type: Type.OBJECT,
@@ -96,6 +103,10 @@ const responseSchema: Schema = {
 export const processPdfContent = async (base64Data: string, mimeType: string): Promise<GeneratedContent> => {
   const totalCards = 40; 
   const maxQuestions = 15;
+
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured on the server.");
+  }
 
   try {
     const response = await genAI.models.generateContent({

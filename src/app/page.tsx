@@ -16,7 +16,7 @@ import Flashcards from '../components/Flashcards';
 import MindMap from '../components/MindMap';
 import Quiz from '../components/Quiz';
 import Logo from '../components/Logo';
-import { processPdfContent } from '../services/geminiService';
+import { processPdfContent } from '../actions/gemini';
 
 enum Tab {
   FLASHCARDS = 'Flashcards',
