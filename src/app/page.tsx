@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import type {
   User,
   DocumentData,
@@ -522,7 +523,6 @@ export default function Home() {
       return;
     }
     setSidebarView(SidebarView.GLOBAL_QUIZ);
-    setActiveDocId(null);
     setActiveGlobalQuiz(null);
     // Reset selections
     setSelectedContest('');
@@ -536,7 +536,6 @@ export default function Home() {
       return;
     }
     setSidebarView(SidebarView.GLOBAL_FLASHCARDS);
-    setActiveDocId(null);
     setActiveGlobalFlashcards(null);
     // Reset selections
     setSelectedContest('');
@@ -930,7 +929,10 @@ export default function Home() {
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50 flex-col md:flex-row">
       <aside className="hidden md:flex w-64 bg-white border-r border-gray-200 flex-col relative z-20 h-full">
-        <div className="p-6 border-b border-gray-100 flex items-center justify-center">
+        <div
+          className="p-6 border-b border-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+          onClick={() => setSidebarView(SidebarView.MY_DOCS)}
+        >
           <Logo className="h-8 text-indigo-600" />
         </div>
         <div className="p-4 space-y-2">
@@ -998,7 +1000,10 @@ export default function Home() {
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
         <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between shadow-sm z-30 shrink-0">
           <div className="flex items-center overflow-hidden">
-            <div className="md:hidden mr-4 flex-shrink-0">
+            <div
+              className="md:hidden mr-4 flex-shrink-0 cursor-pointer"
+              onClick={() => setSidebarView(SidebarView.MY_DOCS)}
+            >
               <Logo className="h-6 text-indigo-600" />
             </div>
             <div className="hidden md:block text-sm text-gray-500 truncate">

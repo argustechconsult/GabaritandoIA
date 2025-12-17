@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { Flashcard } from '../types';
 
 interface FlashcardsProps {
@@ -21,18 +22,24 @@ const Flashcards: React.FC<FlashcardsProps> = ({ cards }) => {
 
   const handleNext = () => {
     if (!isFinished) setIsFlipped(false);
-    
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % totalSteps);
-    }, isFinished ? 0 : 150);
+
+    setTimeout(
+      () => {
+        setCurrentIndex((prev) => (prev + 1) % totalSteps);
+      },
+      isFinished ? 0 : 150,
+    );
   };
 
   const handlePrev = () => {
     if (!isFinished) setIsFlipped(false);
-    
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev - 1 + totalSteps) % totalSteps);
-    }, isFinished ? 0 : 150);
+
+    setTimeout(
+      () => {
+        setCurrentIndex((prev) => (prev - 1 + totalSteps) % totalSteps);
+      },
+      isFinished ? 0 : 150,
+    );
   };
 
   const toggleFlip = () => {
@@ -54,7 +61,11 @@ const Flashcards: React.FC<FlashcardsProps> = ({ cards }) => {
   }, [cards.length, isFinished, totalSteps]); // Dependencies updated
 
   if (!cards || cards.length === 0) {
-    return <div className="text-gray-500 text-center py-10">Nenhum cartão gerado.</div>;
+    return (
+      <div className="text-gray-500 text-center py-10">
+        Nenhum cartão gerado.
+      </div>
+    );
   }
 
   const currentCard = !isFinished ? cards[currentIndex] : null;
@@ -183,41 +194,55 @@ const Flashcards: React.FC<FlashcardsProps> = ({ cards }) => {
           animation-delay: -0.4s;
         }
       `}</style>
-      
+
       {/* Navigation and Card Container */}
       <div className="flex items-center justify-center w-full max-w-5xl gap-4 md:gap-8">
-        
         {/* Prev Button */}
-        <button 
+        <button
           onClick={handlePrev}
           className="p-3 md:p-4 rounded-full bg-white shadow-lg text-indigo-600 hover:bg-indigo-50 transition-transform hover:-translate-x-1 focus:outline-none z-10"
           title="Anterior (Seta Esquerda)"
         >
-          <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          <svg
+            className="w-6 h-6 md:w-8 md:h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
         </button>
 
         {/* Card Area */}
         <div className="relative w-full max-w-2xl aspect-[3/4] md:aspect-[3/2] perspective-1000">
-          
           {isFinished ? (
             /* Success Screen */
-             <div className="relative w-full h-full bg-gradient-to-br from-indigo-900 to-purple-800 rounded-2xl shadow-2xl flex flex-col items-center justify-center text-center p-8 overflow-hidden">
-                <div className="firework"></div>
-                <div className="firework"></div>
-                <div className="firework"></div>
-                
-                <div className="z-10 bg-white/10 backdrop-blur-md p-8 rounded-xl border border-white/20">
-                  <span className="text-4xl mb-4 block">🎉</span>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Parabéns!</h2>
-                  <p className="text-xl text-indigo-100">Você concluiu todos os {cards.length} cards.</p>
-                  <button 
-                    onClick={() => setCurrentIndex(0)}
-                    className="mt-8 px-6 py-2 bg-white text-indigo-900 font-bold rounded-full hover:bg-indigo-50 transition-colors shadow-lg"
-                  >
-                    Estudar Novamente
-                  </button>
-                </div>
-             </div>
+            <div className="relative w-full h-full bg-gradient-to-br from-indigo-900 to-purple-800 rounded-2xl shadow-2xl flex flex-col items-center justify-center text-center p-8 overflow-hidden">
+              <div className="firework"></div>
+              <div className="firework"></div>
+              <div className="firework"></div>
+
+              <div className="z-10 bg-white/10 backdrop-blur-md p-8 rounded-xl border border-white/20">
+                <span className="text-4xl mb-4 block">🎉</span>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                  Parabéns!
+                </h2>
+                <p className="text-xl text-indigo-100">
+                  Você concluiu todos os {cards.length} cards.
+                </p>
+                <button
+                  onClick={() => setCurrentIndex(0)}
+                  className="mt-8 px-6 py-2 bg-white text-indigo-900 font-bold rounded-full hover:bg-indigo-50 transition-colors shadow-lg"
+                >
+                  Estudar Novamente
+                </button>
+              </div>
+            </div>
           ) : (
             /* Flashcard */
             <>
@@ -230,7 +255,10 @@ const Flashcards: React.FC<FlashcardsProps> = ({ cards }) => {
                 className={`relative w-full h-full transition-transform duration-500 transform-style-3d cursor-pointer shadow-2xl rounded-2xl ${
                   isFlipped ? 'rotate-y-180' : ''
                 }`}
-                style={{ transformStyle: 'preserve-3d', transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+                style={{
+                  transformStyle: 'preserve-3d',
+                  transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                }}
                 onClick={toggleFlip}
               >
                 {/* Front (Question) */}
@@ -249,7 +277,10 @@ const Flashcards: React.FC<FlashcardsProps> = ({ cards }) => {
                 {/* Back (Answer) */}
                 <div
                   className="absolute w-full h-full bg-indigo-600 rounded-2xl p-8 md:p-12 flex flex-col items-center justify-center backface-hidden"
-                  style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
+                  style={{
+                    transform: 'rotateY(180deg)',
+                    backfaceVisibility: 'hidden',
+                  }}
                 >
                   <span className="text-sm font-bold text-indigo-200 uppercase tracking-widest mb-6 bg-indigo-700 px-3 py-1 rounded-full">
                     Resposta
@@ -264,27 +295,44 @@ const Flashcards: React.FC<FlashcardsProps> = ({ cards }) => {
         </div>
 
         {/* Next Button */}
-        <button 
+        <button
           onClick={handleNext}
           className="p-3 md:p-4 rounded-full bg-white shadow-lg text-indigo-600 hover:bg-indigo-50 transition-transform hover:translate-x-1 focus:outline-none z-10"
           title="Próximo (Seta Direita)"
         >
-          <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          <svg
+            className="w-6 h-6 md:w-8 md:h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
         </button>
       </div>
 
       {/* Progress Counter */}
       <div className="mt-8 flex flex-col items-center">
         <div className="text-2xl font-bold text-indigo-900 font-mono">
-          {isFinished ? cards.length : currentIndex + 1} <span className="text-gray-400 text-lg">/</span> {cards.length}
+          {isFinished ? cards.length : currentIndex + 1}{' '}
+          <span className="text-gray-400 text-lg">/</span> {cards.length}
         </div>
         <div className="w-64 h-2 bg-gray-200 rounded-full mt-3 overflow-hidden">
-          <div 
-            className={`h-full bg-indigo-500 transition-all duration-300 ease-out ${isFinished ? 'bg-green-500' : ''}`}
+          <div
+            className={`h-full bg-indigo-500 transition-all duration-300 ease-out ${
+              isFinished ? 'bg-green-500' : ''
+            }`}
             style={{ width: `${(currentIndex / cards.length) * 100}%` }} // Changed to use simple percentage for logic match
           ></div>
         </div>
-        <p className="text-xs text-gray-400 mt-2">Use as setas do teclado para navegar</p>
+        <p className="text-xs text-gray-400 mt-2">
+          Use as setas do teclado para navegar
+        </p>
       </div>
     </div>
   );

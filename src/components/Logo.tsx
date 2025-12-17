@@ -1,10 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 
 interface LogoProps {
   className?: string;
 }
 
-const Logo: React.FC<LogoProps> = ({ className = "h-10 w-auto" }) => {
+const Logo: React.FC<LogoProps> = ({ className = 'h-10 w-auto' }) => {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       {/* Ícone: Cérebro com Checkmark estilizado */}
@@ -38,9 +38,12 @@ const Logo: React.FC<LogoProps> = ({ className = "h-10 w-auto" }) => {
         <circle cx="50" cy="90" r="4" fill="currentColor" />
         <circle cx="10" cy="50" r="4" fill="currentColor" />
       </svg>
-      
+
       {/* Tipografia */}
-      <span className="font-bold tracking-tight select-none" style={{ fontSize: '1.75em', lineHeight: 1 }}>
+      <span
+        className="font-bold tracking-tight select-none"
+        style={{ fontSize: '1.75em', lineHeight: 1 }}
+      >
         Gabaritando<span className="opacity-80">IA</span>
       </span>
     </div>
