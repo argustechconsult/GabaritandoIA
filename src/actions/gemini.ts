@@ -3,13 +3,7 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { GeneratedContent } from "../types";
 
-const apiKey = process.env.GEMINI_API_KEY;
 
-if (!apiKey) {
-  console.error("GEMINI_API_KEY is not set in environment variables.");
-}
-
-const genAI = new GoogleGenAI({ apiKey: apiKey || '' });
 
 const responseSchema: Schema = {
   type: Type.OBJECT,
@@ -101,12 +95,15 @@ const responseSchema: Schema = {
 };
 
 export const processPdfContent = async (base64Data: string, mimeType: string): Promise<GeneratedContent> => {
-  const totalCards = 40; 
-  const maxQuestions = 15;
-
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is not configured on the server.");
   }
+  
+  const genAI = new GoogleGenAI({ apiKey });
+  
+  const totalCards = 40; 
+  const maxQuestions = 15;
 
   try {
     const response = await genAI.models.generateContent({
