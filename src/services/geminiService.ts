@@ -99,7 +99,7 @@ export const processPdfContent = async (base64Data: string, mimeType: string): P
 
   try {
     const response = await genAI.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.0",
       contents: {
         parts: [
           {
